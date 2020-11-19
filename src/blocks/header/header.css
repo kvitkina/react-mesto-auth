@@ -1,0 +1,27 @@
+@import url('./__button/header__button.css');
+@import url('./__email/header__email.css');
+@import url('./__section/header__section.css');
+
+.header {
+  max-width: 882px;
+  width: 100%;
+  min-height: 74px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  margin: 0 auto 40px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+    padding-left: 27px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .header {
+    margin: 28px auto 42px;
+    min-height: 56px;
+  }
+}

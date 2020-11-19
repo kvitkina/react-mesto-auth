@@ -1,0 +1,8 @@
+.element__image {
+  width: 100%;
+  object-fit: cover;
+  height: 282px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  flex-grow: 3;
+}

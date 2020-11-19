@@ -1,0 +1,48 @@
+@import url('./__close/popup__close.css');
+@import url('./__container/popup__container.css');
+@import url('./__form/popup__form.css');
+@import url('./__job/popup__job.css');
+@import url('./__name/popup__name.css');
+@import url('./__title/popup__title.css');
+@import url('./__button/popup__button.css');
+@import url('./__container-place/popup__container-place.css');
+@import url('./__place/popup__place.css');
+@import url('./__image/popup__image.css');
+@import url('./__input-container/popup__input-container.css');
+@import url('./__input-error/popup__input-error.css');
+@import url('./__input/popup__input.css');
+@import url('./__input-error/_active/popup__input-error_active.css');
+@import url('./__input/_error/popup__input_error.css');
+@import url('./__title/_theme/popup__title_theme_delete.css');
+@import url('./__button/_theme/popup__button_theme_delete.css');
+@import url('./__input/_theme/popup__input_theme_sign.css');
+@import url('./__button/_theme/popup__button_theme_sign.css');
+@import url('./__title/_theme/popup__title_theme_sign.css');
+@import url('./__container/_theme/popup__container_theme_sign.css');
+@import url('./__job/_theme/popup__job_theme_sign.css');
+@import url('./__sign-in/popup__sign-in.css');
+@import url('./__paragraph/popup__paragraph.css');
+@import url('./__sign-in-link/popup__sign-in-link.css');
+@import url('./__button/_theme/popup__button_theme_register.css');
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.popup {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  animation: fade-out 0.4s;
+}

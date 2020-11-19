@@ -1,0 +1,18 @@
+@import url('./__like/element__like.css');
+@import url('./__title/element__title.css');
+@import url('./__image/element__image.css');
+@import url('./__info/element__info.css');
+@import url('./__trash/element__trash.css');
+@import url('./__like/_theme_black/element__like_theme_black.css');
+@import url('./__like-counter/element__like-counter.css');
+
+.element {
+  max-width: 282px;
+  min-height: 362px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}

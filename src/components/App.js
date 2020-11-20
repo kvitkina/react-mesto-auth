@@ -28,6 +28,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [email, setEmail] = React.useState('')
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false)
+  const [tooltipStatus, setTooltipStatus] = React.useState('')
   const history = useHistory(); 
 
   React.useEffect(() => {
@@ -37,13 +38,16 @@ const App = () => {
   const onRegister = (email, password) => {
     auth.register(email, password)
     .then((res) => {
+      handleTooltip()
+      setTooltipStatus(true)
       history.push('/sign-in');
       })
-    .catch(err => {
-      if (err.status === 400) {
-        return console.log('некорректно заполнено одно из полей')
+      .catch((err) => {
+        if(err === 400){
+      console.log('Некорректно заполнено одно из полей ')
+      handleTooltip()
+      setTooltipStatus(false)
       }
-      return console.log('error 500')
     })
   }
 
@@ -84,6 +88,8 @@ const App = () => {
     setLoggedIn(false)
     history.push('/signin');
   }
+
+  
 
   React.useEffect(() => {
     api
@@ -200,6 +206,10 @@ const App = () => {
     setIsDeletePopupOpen(true)
     setCardToDelete(cardId)
   }
+  const handleTooltip = () => {
+    setIsInfoTooltipOpen(true)
+  }
+
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
@@ -215,8 +225,7 @@ const App = () => {
         <div className="page__container">
           <Header email={email} onSignOut={onSignOut} />
           <ProtectedRoute 
-            exact path="/" 
-<<<<<<< HEAD
+            exact path="/"
             loggedIn={loggedIn}  
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
@@ -228,19 +237,6 @@ const App = () => {
             cards={cards}
             component={Main}
           />
-=======
-            loggedIn={loggedIn} 
-            component={<Main
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardDelete={handleDeleteClick}
-              onCardLike={handleCardLike}
-              onCardDislike={handleCardDislike}
-              cards={cards}
-            />} />
->>>>>>> a24c378ee1d593319e4c82d600f6b6694c927736
           <Route exact path="/"><Footer /></Route>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
@@ -283,7 +279,7 @@ const App = () => {
           <InfoTooltip 
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
-            title="Вы успешно зарегистрировались"
+            tooltipStatus={tooltipStatus}
           />
         </div>
       </div>

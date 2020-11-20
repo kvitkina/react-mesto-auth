@@ -71,11 +71,8 @@ const App = () => {
     auth.checkToken(jwt)
     .then((res) => {
       if (res){
-        const userData = {
-          email: res.email
-        }
         setLoggedIn(true)
-        setEmail(userData.email)
+        setEmail(res.data.email)
         history.push('/');
       }
     }); 
@@ -217,17 +214,16 @@ const App = () => {
           <Header email={email} onSignOut={onSignOut} />
           <ProtectedRoute 
             exact path="/" 
-            loggedIn={loggedIn} 
-            component={<Main
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardDelete={handleDeleteClick}
-              onCardLike={handleCardLike}
-              onCardDislike={handleCardDislike}
-              cards={cards}
-            />} 
+            loggedIn={loggedIn}  
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
+            onCardDelete={handleDeleteClick}
+            onCardLike={handleCardLike}
+            onCardDislike={handleCardDislike}
+            cards={cards}
+            component={Main}
           />
           <Route exact path="/"><Footer /></Route>
           <EditProfilePopup

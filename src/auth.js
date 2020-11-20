@@ -41,7 +41,7 @@ export const checkToken = (token) => {
     })
     .then((res => res.json()))
     .then((data) => {
-      if (data.user){
+      if (data.token){
         localStorage.setItem('jwt', data.jwt);
         return data;
       }

@@ -24,6 +24,8 @@
 @import url('./__paragraph/popup__paragraph.css');
 @import url('./__sign-in-link/popup__sign-in-link.css');
 @import url('./__button/_theme/popup__button_theme_register.css');
+@import url('./__icon/popup__icon.css');
+@import url('./__title/_theme/popup__title_theme_tooltip.css');
 
 @keyframes fade-out {
   from {

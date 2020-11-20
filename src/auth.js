@@ -26,8 +26,12 @@ export const checkToken = (token) => {
         'Authorization': `Bearer ${token}`,
       }
     })
-    .then(res => res.json())
-    .then(data => data)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }  
+      return Promise.reject(res)
+    })
   }
 
   export const authorize = (email, password) => {
@@ -39,7 +43,7 @@ export const checkToken = (token) => {
       },
       body: JSON.stringify({email, password})
     })
-    .then((res => res.json()))
+    .then((response => response.json()))
     .then((data) => {
       if (data.token){
         localStorage.setItem('jwt', data.jwt);

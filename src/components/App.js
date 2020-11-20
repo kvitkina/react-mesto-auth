@@ -57,9 +57,9 @@ const App = () => {
     })
     .catch(err => {
       if (err.status === 400) {
-        return console.log('не передано одно из полей')
+        return console.log('не передано одно из полей ')
       } else if (err.status === 401) {
-        return console.log('пользователь с email не найден')
+        return console.log('пользователь с email не найден ')
       }
       return console.log('error 500')
     })
@@ -216,6 +216,7 @@ const App = () => {
           <Header email={email} onSignOut={onSignOut} />
           <ProtectedRoute 
             exact path="/" 
+<<<<<<< HEAD
             loggedIn={loggedIn}  
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
@@ -227,6 +228,19 @@ const App = () => {
             cards={cards}
             component={Main}
           />
+=======
+            loggedIn={loggedIn} 
+            component={<Main
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              onCardDelete={handleDeleteClick}
+              onCardLike={handleCardLike}
+              onCardDislike={handleCardDislike}
+              cards={cards}
+            />} />
+>>>>>>> a24c378ee1d593319e4c82d600f6b6694c927736
           <Route exact path="/"><Footer /></Route>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
@@ -269,6 +283,7 @@ const App = () => {
           <InfoTooltip 
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
+            title="Вы успешно зарегистрировались"
           />
         </div>
       </div>

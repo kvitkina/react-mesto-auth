@@ -14,6 +14,7 @@ import Login from './Login'
 import Register from './Register'
 import ProtectedRoute from './ProtectedRoute'
 import * as auth from '../auth.js'
+import InfoTooltip  from './InfoTooltip'
 
 const App = () => {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
@@ -26,14 +27,14 @@ const App = () => {
   const [cards, setCards] = React.useState([])
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false)
   const history = useHistory(); 
 
   React.useEffect(() => {
     handleTokenCheck()
   })
 
-  const handleRegister = (email, password) => {
+  const onRegister = (email, password) => {
     auth.register(email, password)
     .then((res) => {
       history.push('/sign-in');
@@ -46,8 +47,7 @@ const App = () => {
     })
   }
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const onLogin = (email, password) => {
     auth.authorize(email, password)
     .then(res  => {
         localStorage.setItem('jwt', res.token)
@@ -57,9 +57,9 @@ const App = () => {
     })
     .catch(err => {
       if (err.status === 400) {
-        return console.log('не передано одно из полей ')
+        return console.log('не передано одно из полей')
       } else if (err.status === 401) {
-        return console.log('пользователь с email не найден ')
+        return console.log('пользователь с email не найден')
       }
       return console.log('error 500')
     })
@@ -76,12 +76,16 @@ const App = () => {
         }
         setLoggedIn(true)
         setEmail(userData.email)
-        history.push("/");
+        history.push('/');
       }
     }); 
    }
   }
 
+  const onSignOut = () => {
+    localStorage.removeItem('jwt');
+    history.push('/signin');
+  }
   React.useEffect(() => {
     api
       .getAllInfo()
@@ -203,13 +207,14 @@ const App = () => {
     setIsEditAvatarPopupOpen(false)
     setSelectedCard(null)
     setIsDeletePopupOpen(false)
+    setIsInfoTooltipOpen(false)
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page__container">
-          <Header email={email}/>
+          <Header email={email} onSignOut={onSignOut} />
           <ProtectedRoute 
             exact path="/" 
             loggedIn={loggedIn} 
@@ -222,7 +227,8 @@ const App = () => {
               onCardLike={handleCardLike}
               onCardDislike={handleCardDislike}
               cards={cards}
-            />} />
+            />} 
+          />
           <Route exact path="/"><Footer /></Route>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
@@ -251,7 +257,7 @@ const App = () => {
               name="login"
               title="Вход" 
               submit="Войти" 
-              handleLogin={handleLogin}
+              onLogin={onLogin}
             />
           </Route>
           <Route path="/sign-up">
@@ -259,9 +265,13 @@ const App = () => {
               name="register"
               title="Регистрация" 
               submit="Зарегистрироваться" 
-              handleRegister={handleRegister}
+              onRegister={onRegister}
             />
           </Route>
+          <InfoTooltip 
+            isOpen={isInfoTooltipOpen}
+            onClose={closeAllPopups}
+          />
         </div>
       </div>
     </CurrentUserContext.Provider>

@@ -3,14 +3,14 @@ import logo from '../images/logo-mesto.svg'
 import { Link, Route } from 'react-router-dom';
 
 
-function Header({ email }) {
+function Header({ email, onSignOut }) {
   return (
     <header className="header">
       <img src={logo} className="logo" alt="Логотип" />
       <div className="header__section">
       <Route exact path="/">
         <p className="header__email">{email}</p>
-        <Link to="/sign-in" className="header__button">
+        <Link to="/sign-in" className="header__button" onClick={onSignOut}>
           Выйти
         </Link>
       </Route>

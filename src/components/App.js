@@ -81,8 +81,10 @@ const App = () => {
 
   const onSignOut = () => {
     localStorage.removeItem('jwt');
+    setLoggedIn(false)
     history.push('/signin');
   }
+
   React.useEffect(() => {
     api
       .getAllInfo()

@@ -57,9 +57,9 @@ const App = () => {
     })
     .catch(err => {
       if (err.status === 400) {
-        return console.log('не передано одно из полей')
+        return console.log('не передано одно из полей ')
       } else if (err.status === 401) {
-        return console.log('пользователь с email не найден')
+        return console.log('пользователь с email не найден ')
       }
       return console.log('error 500')
     })
@@ -71,11 +71,8 @@ const App = () => {
     auth.checkToken(jwt)
     .then((res) => {
       if (res){
-        const userData = {
-          email: res.email
-        }
         setLoggedIn(true)
-        setEmail(userData.email)
+        setEmail(res.data.email)
         history.push('/');
       }
     }); 
@@ -227,8 +224,7 @@ const App = () => {
               onCardLike={handleCardLike}
               onCardDislike={handleCardDislike}
               cards={cards}
-            />} 
-          />
+            />} />
           <Route exact path="/"><Footer /></Route>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
@@ -271,6 +267,7 @@ const App = () => {
           <InfoTooltip 
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
+            title="Вы успешно зарегистрировались"
           />
         </div>
       </div>

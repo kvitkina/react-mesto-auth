@@ -13,7 +13,7 @@ export const register = (email, password) => {
     if (res.ok) {
       return res.json();
     }  
-    return Promise.reject(res)
+    return Promise.reject(new Error(`Что-то пошло не так: ${res.status}`))
   })
 }; 
 
@@ -30,7 +30,7 @@ export const checkToken = (token) => {
       if (res.ok) {
         return res.json();
       }  
-      return Promise.reject(res)
+      return Promise.reject(new Error(`Что-то пошло не так: ${res.status}`))
     })
   }
 
@@ -43,7 +43,12 @@ export const checkToken = (token) => {
       },
       body: JSON.stringify({email, password})
     })
-    .then((response => response.json()))
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }  
+      return Promise.reject(new Error(`Что-то пошло не так: ${res.status}`))
+    })
     .then((data) => {
       if (data.token){
         localStorage.setItem('jwt', data.jwt);

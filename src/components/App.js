@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, useHistory } from 'react-router-dom'
+import { Route, useHistory, Switch } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import Main from './Main'
@@ -13,7 +13,7 @@ import ConfirmDeletePopup from './ConfirmDeletePopup'
 import Login from './Login'
 import Register from './Register'
 import ProtectedRoute from './ProtectedRoute'
-import * as auth from '../auth.js'
+import * as auth from '../utils/auth.js'
 import InfoTooltip  from './InfoTooltip'
 
 const App = () => {
@@ -43,11 +43,11 @@ const App = () => {
       history.push('/sign-in');
       })
       .catch((err) => {
-        if(err === 400){
+        if(err.status === 400){
       console.log('Некорректно заполнено одно из полей ')
+      }
       handleTooltip()
       setTooltipStatus(false)
-      }
     })
   }
 
@@ -61,9 +61,9 @@ const App = () => {
     })
     .catch(err => {
       if (err.status === 400) {
-        return console.log('не передано одно из полей ')
+        return console.log('не передано одно из полей')
       } else if (err.status === 401) {
-        return console.log('пользователь с email не найден ')
+        return console.log('пользователь с email не найден')
       }
       return console.log('error 500')
     })
@@ -74,12 +74,16 @@ const App = () => {
     if (jwt){
     auth.checkToken(jwt)
     .then((res) => {
-      if (res){
         setLoggedIn(true)
         setEmail(res.data.email)
         history.push('/');
+    })
+    .catch(err => {
+      if (err.status === 401) {
+        return console.log('Токен не передан или передан не в том формате')
       }
-    }); 
+        return console.log('Переданный токен некорректен')
+    })
    }
   }
 
@@ -224,6 +228,7 @@ const App = () => {
       <div className="page">
         <div className="page__container">
           <Header email={email} onSignOut={onSignOut} />
+          <Switch>
           <ProtectedRoute 
             exact path="/"
             loggedIn={loggedIn}  
@@ -238,6 +243,23 @@ const App = () => {
             component={Main}
           />
           <Route exact path="/"><Footer /></Route>
+          <Route path="/sign-in">
+            <Login 
+              name="login"
+              title="Вход" 
+              submit="Войти" 
+              onLogin={onLogin}
+            />
+          </Route>
+          <Route path="/sign-up">
+            <Register 
+              name="register"
+              title="Регистрация" 
+              submit="Зарегистрироваться" 
+              onRegister={onRegister}
+            />
+          </Route>
+          </Switch>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
@@ -260,26 +282,12 @@ const App = () => {
             onSubmit={handleCardDelete}
           />
           <ImagePopup name="photo-zoom" card={selectedCard} onClose={closeAllPopups} />
-          <Route path="/sign-in">
-            <Login 
-              name="login"
-              title="Вход" 
-              submit="Войти" 
-              onLogin={onLogin}
-            />
-          </Route>
-          <Route path="/sign-up">
-            <Register 
-              name="register"
-              title="Регистрация" 
-              submit="Зарегистрироваться" 
-              onRegister={onRegister}
-            />
-          </Route>
           <InfoTooltip 
             isOpen={isInfoTooltipOpen}
             onClose={closeAllPopups}
             tooltipStatus={tooltipStatus}
+            message="Вы успешно зарегистрировались!"
+            errMessage='Что-то пошло не так! Попробуйте ещё раз.'
           />
         </div>
       </div>

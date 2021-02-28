@@ -2,6 +2,4 @@
 
 Все запросы на авторизацию, регистрацию и проверку токена работают через сервис `https://auth.nomoreparties.co`. Остальные запросы, не относящиеся к авторизации идут к бэкенду из предыдущих работ.
 
-![Screenshot](for-readme.png)
-
 ![Optional Text](./src/images/for-readme.png)
